@@ -1,4 +1,8 @@
 import shutil
+import sys
+from docutils.core import publish_parts
+from markdown import markdown
+from ssg.content import Content
 
 from typing import List
 from pathlib import Path
@@ -24,6 +28,13 @@ class Parser:
 
     def copy(self, path, source, dest):
         shutil.copy2(path, dest / path.relative_to(source))
+
+
+class MarkdownParser(Parser):
+    extensions = [".md", ".markdown"]
+
+    def parse(self, path: Path, source: Path, dest: Path):
+        raise NotImplementedError
 
 
 class ResourceParser(Parser):
